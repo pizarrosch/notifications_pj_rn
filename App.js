@@ -36,7 +36,6 @@ export default function App() {
 
       try {
         const pushTokenData = await Notifications.getExpoPushTokenAsync({projectId});
-        console.log(pushTokenData);
       } catch (error) {
         console.log(error);
       }
@@ -88,9 +87,24 @@ export default function App() {
     }
   }
 
+  function sendPushNotificationHandler() {
+    fetch("https://exp.host/--/api/v2/push/send", {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        "to": "ExponentPushToken[1c3xjjIsydtfFEY7fL4lpN]",
+        "title": "Important update",
+        "body": "You have received new notification from Police"
+      })
+    })
+  }
+
   return (
     <View style={styles.container}>
       <Button title='Schedule Notification' onPress={scheduleNotificationHandler}/>
+      <Button title='Send Push Notification' onPress={sendPushNotificationHandler}/>
       <StatusBar style="auto"/>
     </View>
   );
